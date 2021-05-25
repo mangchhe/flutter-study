@@ -39,42 +39,108 @@
 - test : 개발하기 위한 dart 관련 코드를 테스트할 수 있다.
 - **lib** : 해당 폴더는 main.dart 파일을 가지고 있고 개발을 진행하면서 대부분의 작업을 진행하게 되는 공간
 
-### 기본 코드
+## Class & Function
+
+- 클래스
+  - 객체가 가져야 하는 상태와 기능을 정의한 내용을 담고 있는 설계도
+- 객체
+  - 클래스 정의 후에 메모리 상에 할당되었을 때 이를 객체라고 함
+- 인스턴스
+  - 클래스(설계도)를 기반으로 생성이 된 것을 인스턴스라고 함
 
 ``` dart
-import 'package:flutter/material.dart';
+class Person {
+  String? name;
+  int? age;
+  String? sex;
 
-void main() => runApp(MyApp());
+  Person.init(this.name, this.age, this.sex);
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Tutorial',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
-  }
+  Person({this.name = 'Hong Gil Dong', this.age = 20, this.sex = 'Male'});
+
 }
 
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Tutorial'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Text('Hello World!'),
-            Text('My Name is JooHyun!')
-          ],
-        ),
-      ),
-    );
-  }
+int addNumber(int num1, int num2){
+  return num1 + num2;
+}
+
+void main(){
+
+  Person p1 = new Person();
+  Person p2 = new Person.init('Ha Joo Hyun', 26, 'Male');
+  Person p3 = new Person(name: 'IU', sex: 'Female', age: 29);
+
+  print("name : ${p1.name} sex : ${p1.sex} age : ${p1.age}");
+  print("name : ${p2.name} sex : ${p2.sex} age : ${p2.age}");
+  print("name : ${p3.name} sex : ${p3.sex} age : ${p3.age}");
+
+  print(addNumber(3, 4));
 }
 ```
+
+**알게 된 사실**
+``` java
+1. 변수 선언
+// ? : nullable, var도 가능(타입 추론)
+String? name;
+int? age;
+String? sex;
+
+2. 생성자 생성 방법
+// dart
+Person(this.name, this.age, this.sex)
+// java
+Person(String name, int age, String sex){
+  this.name = name;
+  this.age = age;
+  this.sex = sex;
+
+3. 생성자 생성 방법2
+// 파라미터 {} 감싸면서 default 값 줄 수 있음
+Person({this.name = 'Hong Gil Dong', this.age = 20, this.sex = 'Male'});
+}
+
+4. 생성자 생성 방법3
+Person.init(this.name, this.age, this.sex);
+
+5. 객체 생성
+Person p1 = new Person();
+Person p2 = new Person.init('Ha Joo Hyun', 26, 'Male');
+Person p3 = new Person(name: 'IU', sex: 'Female', age: 29);
+
+6. 함수 생 및 호출
+// 자바와 동일
+int addNumber(int num1, int num2){
+  return num1 + num2;
+}
+print(addNumber(3, 4));
+
+7. 출력
+// 자바와 같이 +로 연결 불가능
+print("name : ${p1.name} sex : ${p1.sex} age : ${p1.age}");
+
+```
+## MyHomePage 속 모르는 개념들
+
+- Scaffold
+  - backgroundColor : 배경색 지정
+  - appBar : 상단 위젯
+    - centerTitle : 텍스트 가운데 정렬
+  - body
+    - Padding : 상하좌우 거리 조절 가능한 레이아웃 위젯
+      - padding, EdgeInsets.fromLTRB(L, T, R, B) : 바깥 거리 조절
+      - child
+        - Column : 수직 위젯
+          - crossAxisAligment, CrossAxisAligment.start : 위젯 시작 위치 지정
+          - children
+            - Center
+              - CircleAvatar : avatar 넣기
+                - backgroundImage: Image.network('<URL>').image,
+                // backgroundImage: Image.asset('assets/iu.jpg').image,
+                // backgroundImage: AssetImage('assets/iu.jpg'),
+                - radius
+            - Divider : 분리선(/hr)
+              - height, color, thickness, endIndent
+            - SizedBox : 박스
+              - height, width
+            - Row : 수평 위젯
