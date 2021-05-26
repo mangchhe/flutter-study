@@ -22,6 +22,26 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter Tutorial'),
         backgroundColor: Color.fromRGBO(243, 163, 207, .7),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            print('menu button is clicked');
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              print('Shopping cart button is clicked');
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              print('Search button is clicked');
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 40.0, 0.0, 0.0),
@@ -140,6 +160,67 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
             )
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage('assets/iu.jpg'),
+                backgroundColor: Colors.white,
+              ),
+              otherAccountsPictures: [
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/iu2.png'),
+                  backgroundColor: Colors.white,
+                )
+              ],
+              accountName: Text('IU'),
+              accountEmail: Text('IU@IU.com'),
+              onDetailsPressed: (){
+                print('arrow is clicked');
+              },
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(243, 163, 207, 1.0),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40.0),
+                    bottomRight: Radius.circular(40.0)
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home,
+                color: Colors.black,
+              ),
+              title: Text('home'),
+              onTap: (){
+                print('Home is clicked');
+              },
+              trailing: Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings,
+                color: Colors.black,
+              ),
+              title: Text('setting'),
+              onTap: (){
+                print('Setting is clicked');
+              },
+              trailing: Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(Icons.question_answer,
+                color: Colors.black,
+              ),
+              title: Text('Q&A'),
+              onTap: (){
+                print('Q&A is clicked');
+              },
+              trailing: Icon(Icons.add),
+            ),
           ],
         ),
       ),
