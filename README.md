@@ -180,3 +180,31 @@ actions: [
 - ListView
   - UserAccountDrawerHeader : 상단
   - ListTile : 하단
+
+## BuildContext
+
+- Widget tree에서 widget의 위치 정보를 다룬다.
+- Widget build(BuildContext context)
+  - Scaffold위젯을 리턴하고 위젯 트리 상에서 어디에 위치하는가에 대한 정보를 가진 build 메소드
+- BuildContext 는 stateless 위젯이나 state 빌드 메소드에 의해서 리턴 된 위젯의 부모가 된다.
+
+- Scaffold.of(context) method
+  - 현재 주어진 context 에서 위로 올라가면서 가장 가까운 **Scaffold** 를 찾아서 반환하는 함수
+- Something.of(context)
+  - 현재 주어진 context 에서 위로 올라가면서 가장 가까운 **Something** 을 찾아서 반환하는 함수
+- Theme.of(context)
+  - 현재 주어진 context 에서 위로 올라가면서 가장 가까운 **Theme** 을 찾아서 반환하는 함수
+
+※ context : BuildContext 의 인스턴스
+
+![scaffoldDir](https://user-images.githubusercontent.com/50051656/120074594-90382680-c0d8-11eb-932c-95bb3dcaee7d.PNG)
+
+context 위치 정보가 MyPage로 되어있어 Scaffold를 찾지 못하여 오류가 발생한다.
+
+![scaffoldDirSolv](https://user-images.githubusercontent.com/50051656/120074598-91695380-c0d8-11eb-90c4-b0efe76fe1a9.PNG)
+
+Builder Widget과 Stateless Widget을 이용하여 파라미터로 전달되는 위치 정보를 Widget tree 상에 Scaffold 아래에 위치시킴으로서 Scaffold의 위치를 찾아낼 수 있다.
+
+**But**, 현재 Scaffold.of는 deprecated 되어 있고 ScaffoldMessenger.of를 이용해야하며 ScaffoldMessenger.of를 이용하면 내부적으로 Scaffold가 내장되어 있어서 불필요하게 Builder와 같은 것을 이용할 필요가 없다
+
+[ScaffoldMessenger Reference](https://flutter.dev/docs/release/breaking-changes/scaffold-messenger)
