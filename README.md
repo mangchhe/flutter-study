@@ -175,7 +175,7 @@ actions: [
 
 ## Drawer
 
-![Drawer](https://user-images.githubusercontent.com/50051656/119541828-d2f0ba80-bdc9-11eb-832a-8ecf7862c030.PNG)
+![drawer](https://user-images.githubusercontent.com/50051656/120104784-2465c480-c191-11eb-908d-d387759f92b2.PNG)
 
 - ListView
   - UserAccountDrawerHeader : 상단
@@ -208,3 +208,100 @@ Builder Widget과 Stateless Widget을 이용하여 파라미터로 전달되는 
 **But**, 현재 Scaffold.of는 deprecated 되어 있고 ScaffoldMessenger.of를 이용해야하며 ScaffoldMessenger.of를 이용하면 내부적으로 Scaffold가 내장되어 있어서 불필요하게 Builder와 같은 것을 이용할 필요가 없다
 
 [ScaffoldMessenger Reference](https://flutter.dev/docs/release/breaking-changes/scaffold-messenger)
+
+## Widget
+
+flutter Layout Widget은 3가지로 나뉨
+
+- Single-child layout widgets
+- Multi-child layout widgets
+- Sliver widgets
+
+[Layout Widget Reference](https://flutter.dev/docs/development/ui/widgets/layout#Multi-child%20layout%20widgets)
+
+### Container(Single-child)
+
+- children이 없을 경우 가능한 최대한 공간을 차지한다.
+- children이 있을 경우 소속되어 있는 위젯의 크기만큼 공간을 가짐
+- 화면 밖으로 빠져나가지 않게 경계를 지정해주는 SafeArea로 감싸줄 필요가 있다.
+
+### Column & Row(Multi-child)
+
+- 가로축은 소속되어 있는 위젯의 크기만큼 차지하고 새로축은 모두 차지한다.
+- 새로축을 모두 차지하기 때문에 Center로 감싸도 새로축은 가운데 정렬이 되지 않는다
+  - `mainAxisAlignment: MainAxisAlignment.center`를 이용해서 가운데 정렬하는 방법
+  - `mainAxisSize: MainAxisSize.min`를 이용해서 차지하는 공간을 필수적으로 필요하는 최소한의 공간으로 지정하는 방법
+- `verticalDirection: VerticalDirection.up(down)` 위젯을 아래에서 쌓을지 위에서 쌓을지 결정할 수 있다.
+- `crossAxisAlignment: CrossAxisAlignment.center` Column 위젯 가로축 공간 내에서 정렬이 이루어짐
+  - 내부에 Container를 만들고 `width: double.infinity` 속성을 주어 crossAxis와 연동하여 가로측 우측정렬을 할 수 있다.
+  
+[Layout 학습 사이트](https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e)
+
+## Navigator 
+
+- 페이지 간 이동을 구현할 때 사용
+- 페이지에 대한 데이터를 관리하기 위해서 Stack 자료구조를 이용
+
+## Collection and Generic
+
+``` dart
+// Collection
+List<int> number = List.filled(0, 0, growable: true); // growable list
+List<int> number = []; // growable list
+List<int> number = List.filled(0, 0); // fixed length list
+
+// Generic
+int addNumber(int num1, int num2){
+  return num1 + num2;
+}
+
+void main(){
+  // List<dynamic> number = [];
+  List<int> number = [];
+  
+  number.add(2);
+  // number.add('test');
+  // number.add(7.4);
+  number.add(addNumber(3,4));
+  // number.add(true);
+}
+
+// Generic Class
+
+class Circle {}
+class Square {}
+
+class SquareSlot {
+  insert (Square squareSlot){}
+}
+
+class CircleSlot {
+  insert (Circle circleSlot){}
+}
+
+// 사용 전
+
+void main(){
+  var circleSlot = new CircleSlot();
+  circleSlot.insert(new Circle());
+
+  var squareSlot = new SquareSlot();
+  squareSlot.insert(new Square());
+}
+
+// 사용 후
+
+class Slot<T> {
+  insert(T shape){}
+}
+
+void main(){
+  Slot<Circle> circleSlot2 = new Slot();
+  circleSlot2.insert(new Circle());
+  
+  Slot<Square> squareSlot2 = new Slot();
+  squareSlot2.insert(new Square());
+}
+```
+
+[List Reference](https://api.flutter.dev/flutter/dart-core/List-class.html)
